@@ -1,0 +1,142 @@
+activity_main
+
+	<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ListView
+        android:id="@+id/listview1"
+        android:layout_width="368dp"
+        android:layout_height="503dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="52dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CAC TINH VIET NAM"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="4dp" />
+</android.support.constraint.ConstraintLayout>
+
+activity_main2
+
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Main2Activity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="384dp"
+        android:layout_height="169dp"
+        android:text="Text"
+        android:gravity="center"
+        android:textSize="50sp"
+        android:textStyle="bold" />
+</android.support.constraint.ConstraintLayout>
+
+
+MainActivity
+
+package com.dmt.xuanbach.myapplication;
+
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity {
+    ListView lv;
+    Button bt;
+    ArrayList<String> array;
+    int pos;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        lv =  (ListView) findViewById(R.id.listview1);
+        bt= (Button) findViewById(R.id.button);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                array= new ArrayList<>();
+                array.add("HA NOI");
+                array.add("NGHE AN");
+                array.add("HA TINH");
+                array.add("QUANG BINH");
+                array.add("QUANG TRI");
+                array.add("THUA THIEN HUE");
+                array.add("QUANG NAM");
+                array.add("DA NANG");
+                array.add("QUANG NGAI");
+                array.add("NINH THUAN");
+                array.add("BINH THUAN");
+                array.add("KHANH HOA");
+                array.add("HO CHI MINH");
+                ArrayAdapter adapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1,array);
+                lv.setAdapter(adapter);
+                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,int i , long id) {
+                        String noidung= array.get(i);
+                        Intent intent = new Intent(MainActivity.this,Main2Activity.class);
+                            intent.putExtra("info",noidung);
+                        startActivity(intent);
+
+                        Toast.makeText(MainActivity.this,noidung, Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+
+    }
+}
+
+
+Main2Activity
+
+
+
+package com.dmt.xuanbach.myapplication;
+
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class Main2Activity extends AppCompatActivity {
+        TextView tv;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
+        tv=(TextView) findViewById(R.id.textView);
+        Intent intent= getIntent();
+        String data=intent.getStringExtra("info");
+        tv.setText(data);
+
+    }
+}
